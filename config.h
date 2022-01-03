@@ -63,6 +63,11 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "urxvt", NULL };
+static const char *cmdlock[]  = { "slock", NULL };
+static const char *printscreen[]  = { "flameshot", "screen", "-c", NULL };
+static const char *printscreen_area[]  = { "flameshot", "gui",  NULL };
+static const char *clipmenu[]  = { "clipmenu", "-i",  NULL };
+static const char *clipdel[]  = { "clipdel", "-d", ".*",  NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -89,6 +94,12 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_e,      quit,           {0} },
+    { MODKEY|ShiftMask,             XK_x,      spawn,          {.v = cmdlock } },
+    { 0,                            XK_Print,  spawn,          {.v = printscreen_area } },
+    { ShiftMask,                    XK_Print,  spawn,          {.v = printscreen } },
+    { MODKEY,                       XK_c,      spawn,          {.v = clipmenu } },
+    { MODKEY|ShiftMask,             XK_c,      spawn,          {.v = clipdel } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -99,7 +110,6 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	TAGKEYS(                        XK_0,                      9)
-	{ MODKEY|ShiftMask,             XK_e,      quit,           {0} },
 };
 
 /* button definitions */
